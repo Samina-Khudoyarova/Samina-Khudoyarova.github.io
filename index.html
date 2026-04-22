@@ -8,12 +8,39 @@
         @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;700&display=swap');
 
         :root {
-            --neon-pink: #ff00ff;
-            --electric-blue: #00ffff;
-            --acid-green: #ccff00;
-            --deep-black: #000000;
-            --bright-white: #ffffff;
-            --blood-orange: #ff4500;
+            /* Default Palette */
+            --primary: #ff00ff; /* Neon Pink */
+            --secondary: #00ffff; /* Electric Blue */
+            --accent: #ccff00; /* Acid Green */
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --header-text: #000000;
+            --overlay: rgba(0, 0, 0, 0.4); /* Less dark overlay */
+        }
+
+        /* Outcome Palettes */
+        body.theme-fast-food {
+            --primary: #ff4500; /* Red-Orange */
+            --secondary: #ffd700; /* Gold/Mustard */
+            --accent: #ffffff;
+        }
+
+        body.theme-home-food {
+            --primary: #4caf50; /* Fresh Green */
+            --secondary: #8b4513; /* Earthy Brown */
+            --accent: #ffeb3b;
+        }
+
+        body.theme-dessert {
+            --primary: #ff69b4; /* Hot Pink */
+            --secondary: #e0bbff; /* Lavender */
+            --accent: #00ffff;
+        }
+
+        body.theme-skip-meal {
+            --primary: #607d8b; /* Cold Grey */
+            --secondary: #263238; /* Dark Slate */
+            --accent: #00ffff;
         }
 
         * {
@@ -24,16 +51,17 @@
 
         body {
             font-family: 'Space Grotesk', sans-serif;
-            background-color: var(--deep-black);
-            color: var(--bright-white);
+            background-color: var(--bg-color);
+            color: var(--text-color);
             overflow-x: hidden;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Multi-layer collage background using food textures */
+            transition: background-image 0.5s ease-in-out, background-color 0.5s;
+            /* Lighter overlay for better visibility of the food */
             background-image: 
-                linear-gradient(45deg, rgba(255, 0, 255, 0.4), rgba(0, 255, 255, 0.4)),
+                linear-gradient(45deg, var(--overlay), var(--overlay)),
                 url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=1920');
             background-size: cover;
             background-position: center;
@@ -43,21 +71,23 @@
         #app-container {
             width: 90%;
             max-width: 600px;
-            background: var(--bright-white);
-            border: 10px solid var(--deep-black);
-            box-shadow: 20px 20px 0px var(--neon-pink), -20px -20px 0px var(--electric-blue);
+            background: var(--text-color);
+            border: 10px solid var(--bg-color);
+            box-shadow: 20px 20px 0px var(--primary), -20px -20px 0px var(--secondary);
             padding: 40px;
             position: relative;
             z-index: 10;
+            transition: all 0.3s ease;
         }
 
         header {
-            background: var(--acid-green);
-            color: var(--deep-black);
+            background: var(--accent);
+            color: var(--header-text);
             padding: 20px;
             margin: -60px -60px 40px -60px;
             transform: rotate(-2deg);
-            border: 5px solid var(--deep-black);
+            border: 5px solid var(--bg-color);
+            transition: background 0.3s;
         }
 
         h1 {
@@ -85,13 +115,14 @@
         }
 
         .question {
-            color: var(--deep-black);
+            color: var(--bg-color);
             font-size: 2.5rem;
             font-weight: 900;
             text-transform: uppercase;
             margin-bottom: 20px;
-            border-bottom: 8px solid var(--neon-pink);
+            border-bottom: 8px solid var(--primary);
             display: inline-block;
+            transition: border-color 0.3s;
         }
 
         .btn-group {
@@ -101,8 +132,8 @@
         }
 
         button {
-            background: var(--deep-black);
-            color: var(--bright-white);
+            background: var(--bg-color);
+            color: var(--text-color);
             border: none;
             padding: 20px;
             font-family: 'Archivo Black', sans-serif;
@@ -110,46 +141,44 @@
             text-transform: uppercase;
             cursor: pointer;
             transition: all 0.1s;
-            border: 4px solid var(--deep-black);
+            border: 4px solid var(--bg-color);
             position: relative;
         }
 
         button:hover {
             transform: translate(-5px, -5px);
-            box-shadow: 5px 5px 0px var(--acid-green);
-            background: var(--blood-orange);
-        }
-
-        button:active {
-            transform: translate(0, 0);
-            box-shadow: none;
+            box-shadow: 5px 5px 0px var(--accent);
+            background: var(--primary);
+            color: var(--bg-color);
         }
 
         #result-display {
             text-align: center;
-            background: var(--deep-black);
-            color: var(--acid-green);
+            background: var(--bg-color);
+            color: var(--accent);
             padding: 40px;
-            border: 5px dashed var(--electric-blue);
+            border: 5px dashed var(--secondary);
+            transition: all 0.3s;
         }
 
         .result-label {
             font-size: 1.2rem;
-            color: var(--neon-pink);
+            color: var(--primary);
             margin-bottom: 10px;
+            font-weight: bold;
         }
 
         .result-value {
             font-family: 'Archivo Black', sans-serif;
             font-size: 4rem;
             line-height: 1;
-            text-shadow: 4px 4px 0px var(--bright-white);
+            text-shadow: 4px 4px 0px var(--text-color);
         }
 
         .restart-btn {
             margin-top: 30px;
-            background: var(--electric-blue);
-            color: var(--deep-black);
+            background: var(--secondary);
+            color: var(--bg-color);
             width: 100%;
         }
 
@@ -159,9 +188,10 @@
             z-index: -1;
             font-family: 'Archivo Black', sans-serif;
             font-size: 10vw;
-            opacity: 0.1;
+            opacity: 0.15;
             pointer-events: none;
             white-space: nowrap;
+            transition: color 0.5s;
         }
 
         @media (max-width: 600px) {
@@ -174,12 +204,12 @@
 </head>
 <body>
 
-    <div class="decoration" style="top: 5%; left: -5%; color: var(--neon-pink); transform: rotate(15deg);">PIZZA RAMEN</div>
-    <div class="decoration" style="bottom: 10%; right: -5%; color: var(--electric-blue); transform: rotate(-10deg);">COFFEE HUNGRY</div>
+    <div id="dec-1" class="decoration" style="top: 5%; left: -5%; color: var(--primary); transform: rotate(15deg);">PIZZA RAMEN</div>
+    <div id="dec-2" class="decoration" style="bottom: 10%; right: -5%; color: var(--secondary); transform: rotate(-10deg);">COFFEE HUNGRY</div>
 
     <div id="app-container">
         <header>
-            <h1>Student Oracle v1.0</h1>
+            <h1 id="main-header">Student Oracle</h1>
         </header>
 
         <!-- Step 1: Hungry? -->
@@ -212,7 +242,7 @@
         <!-- Result -->
         <div class="step-container" id="step-result">
             <div id="result-display">
-                <p class="result-label">THE ORACLE SAYS:</p>
+                <p id="outcome-caption" class="result-label">THE ORACLE SAYS:</p>
                 <h2 id="final-outcome" class="result-value">---</h2>
             </div>
             <button class="restart-btn" onclick="restart()">TRY AGAIN</button>
@@ -220,12 +250,29 @@
     </div>
 
     <script>
-        // State Management
-        let state = {
-            hungry: null,
-            mood: null,
-            budget: null
+        const backgroundImages = {
+            default: "url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=1920')",
+            "FAST FOOD": "url('https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&q=80&w=1920')",
+            "HOME FOOD": "url('https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&q=80&w=1920')",
+            "DESSERT": "url('https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&q=80&w=1920')",
+            "SKIP MEAL": "url('https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&q=80&w=1920')"
         };
+
+        const resultMessages = {
+            "FAST FOOD": "GET THAT GREASE!",
+            "HOME FOOD": "COOK SOMETHING, CHEF!",
+            "DESSERT": "SUGAR RUSH TIME!",
+            "SKIP MEAL": "STAY HYDRATED INSTEAD!"
+        };
+
+        const themes = {
+            "FAST FOOD": "theme-fast-food",
+            "HOME FOOD": "theme-home-food",
+            "DESSERT": "theme-dessert",
+            "SKIP MEAL": "theme-skip-meal"
+        };
+
+        let state = { hungry: null, mood: null, budget: null };
 
         function handleInput(key, value) {
             state[key] = value;
@@ -233,44 +280,47 @@
         }
 
         function determineNextStep(lastInput) {
-            const { hungry, mood, budget } = state;
-
-            // Decision Tree logic
-            if (lastInput === 'hungry') {
-                showStep('mood');
-            } 
+            const { hungry, mood } = state;
+            if (lastInput === 'hungry') showStep('mood');
             else if (lastInput === 'mood') {
-                // If hungry and mood is bad -> A3 (No budget check needed)
-                if (hungry === true && mood === false) {
-                    showResult("DESSERT");
-                } 
-                // If not hungry and mood is bad -> A4 (No budget check needed)
-                else if (hungry === false && mood === false) {
-                    showResult("SKIP MEAL");
-                } 
-                // Otherwise need budget check
-                else {
-                    showStep('budget');
-                }
-            } 
-            else if (lastInput === 'budget') {
-                calculateFinalResult();
+                if (hungry === true && mood === false) showResult("DESSERT");
+                else if (hungry === false && mood === false) showResult("SKIP MEAL");
+                else showStep('budget');
             }
+            else if (lastInput === 'budget') calculateFinalResult();
         }
 
         function calculateFinalResult() {
             const { hungry, mood, budget } = state;
-
             if (hungry === true) {
                 if (mood === true) {
-                    if (budget === true) showResult("FAST FOOD"); // (M & B & H)
-                    else showResult("HOME FOOD");                 // (M & !B & H)
+                    if (budget === true) showResult("FAST FOOD"); 
+                    else showResult("HOME FOOD");                 
                 }
             } else {
                 if (mood === true) {
-                    if (budget === true) showResult("DESSERT");    // (M & B & !H)
-                    else showResult("SKIP MEAL");                 // (M & !B & !H)
+                    if (budget === true) showResult("DESSERT");    
+                    else showResult("SKIP MEAL");                 
                 }
+            }
+        }
+
+        function updateUI(outcome) {
+            // Update Image
+            const imageUrl = backgroundImages[outcome] || backgroundImages.default;
+            document.body.style.backgroundImage = `linear-gradient(45deg, var(--overlay), var(--overlay)), ${imageUrl}`;
+            
+            // Update Theme Class
+            document.body.className = themes[outcome] || '';
+            
+            // Update Caption
+            const caption = document.getElementById('outcome-caption');
+            if (outcome !== 'default') {
+                caption.innerText = resultMessages[outcome];
+                document.getElementById('main-header').innerText = outcome;
+            } else {
+                caption.innerText = "THE ORACLE SAYS:";
+                document.getElementById('main-header').innerText = "Student Oracle";
             }
         }
 
@@ -281,11 +331,13 @@
 
         function showResult(text) {
             document.getElementById('final-outcome').innerText = text;
+            updateUI(text);
             showStep('result');
         }
 
         function restart() {
             state = { hungry: null, mood: null, budget: null };
+            updateUI('default');
             showStep('hungry');
         }
     </script>
